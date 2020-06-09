@@ -1,1 +1,2 @@
 "# Stock-Options-Calculator-Command-line-program-" 
+This is a commend line program in python which calculates the fair value of a stock option provided that the user provides the stock's historical share price information in a csv file format downloaded from Yahoo Finance
