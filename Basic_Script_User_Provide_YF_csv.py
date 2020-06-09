@@ -19,8 +19,6 @@ def main():
         N = 1
         header = next(reader)
         old_close = next(reader)[5]
-        print(header)
-        print(old_close)
         daily_return_accum = 0
         daily_return_squared_accum = 0
 
@@ -42,26 +40,17 @@ def main():
             #This is the end of the for loop
             
         NewN = N - 1
-        print(f"N: {N}")
         st_dev_daily = sqrt((daily_return_squared_accum/(NewN))-((daily_return_accum*daily_return_accum)/((NewN)*N)))
-        print(f"Daily return squared total: {daily_return_squared_accum}")
-        print(f"Daily return total: {daily_return_accum}")
-        print(f"Standard deviation daily: {st_dev_daily}")
-        historical_volatility = st_dev_daily*(sqrt(N/term))
+        historical_volatility = round(st_dev_daily*(sqrt(N/term)),2)
         print(f"HIstorical Volatility: {historical_volatility}")  
   
         variance = (historical_volatility * historical_volatility) 
-        print(f"Variance: {variance}")
         d1 = (log(stock_price/strike_price) + ((risk_free_rate/100) - dividend_yield_percentage +(variance/2) * term))/((sqrt(variance))*(sqrt(term)))      
-        print(f"D1: {d1}")
         N_d1 = norm.cdf(d1, 0, 1)
-        print(f"N(d1): {N_d1}")
         d2 = d1 - ((sqrt(variance))*(sqrt(term)))
         N_d2 = norm.cdf(d2, 0, 1)
-        print(f"d2: {d2}")
-        print(f"N(d2): {N_d2}")
         
-        call_value = (exp((0 - dividend_yield_percentage) * term))*N_d1*stock_price - strike_price*(exp(0 - (risk_free_rate/100)))*N_d2
+        call_value = round(((exp((0 - dividend_yield_percentage) * term))*N_d1*stock_price - strike_price*(exp(0 - (risk_free_rate/100)))*N_d2),2)
         print(f"Per option call value: {call_value}")
         fair_value_option = round(number_of_options * call_value,2)
         print(f"The fair value of the options are {fair_value_option}")       
